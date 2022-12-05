@@ -6,10 +6,6 @@ with open('token.txt') as file:
     TOKEN = file.readline()
 bot = telebot.TeleBot(TOKEN)
 
-'''Правила арендования площадки Вячеслав Власов выписывает разрешения для прохода на площадку. 
-Поменять цель проекта в плане того, что мы доводим площадку до конца. 
-+ кнопка назад c коллбэком на help'''
-
 back = telebot.types.InlineKeyboardMarkup()
 back.add(telebot.types.InlineKeyboardButton('Назад', callback_data='help'))
 
@@ -33,6 +29,7 @@ def add_group_number(message, telegram_id):
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
+    bot.clear_step_handler(message)
     keyboard = telebot.types.InlineKeyboardMarkup()
     if db.if_admin(message.chat.id):
         keyboard.add(telebot.types.InlineKeyboardButton('Добавить мероприятие', callback_data='new_event'))
